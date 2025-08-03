@@ -52,7 +52,7 @@ function App() {
 
       <section>
         <h2>Modal Demo</h2>
-        <Button onClick={() => setIsModalOpen(true)}>Open Modal</Button>
+        <Button onClick={() => setIsModalOpen(true)} label="Open Modal" />
 
         <Modal
           isOpen={isModalOpen}
@@ -77,14 +77,10 @@ function App() {
           >
             <Button
               variant="outline"
-              size="small"
               onClick={() => setIsModalOpen(false)}
-            >
-              Cancel
-            </Button>
-            <Button size="small" onClick={() => setIsModalOpen(false)}>
-              Confirm
-            </Button>
+              label="Cancel"
+            />
+            <Button onClick={() => setIsModalOpen(false)} label="Confirm" />
           </div>
         </Modal>
       </section>

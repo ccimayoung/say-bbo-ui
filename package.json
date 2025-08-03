@@ -45,7 +45,7 @@
     "lint": "eslint src --ext .ts,.tsx",
     "lint:fix": "eslint src --ext .ts,.tsx --fix"
   },
-  "author": "Your Name",
+  "author": "ayoung.shim",
   "license": "MIT",
   "devDependencies": {
     "@emotion/babel-plugin": "^11.13.5",
