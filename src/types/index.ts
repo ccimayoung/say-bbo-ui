@@ -3,7 +3,6 @@ import {
   ButtonHTMLAttributes,
   HTMLAttributes,
   ReactElement,
-  ComponentType,
 } from 'react';
 
 export interface BaseProps {

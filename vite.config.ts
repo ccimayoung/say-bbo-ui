@@ -23,10 +23,24 @@ export default defineConfig({
   ],
   build: {
     lib: {
-      entry: resolve(__dirname, 'src/index.ts'),
-      name: 'SayBboUI',
+      entry: {
+        index: resolve(__dirname, 'src/index.ts'),
+        button: resolve(__dirname, 'src/components/Button/index.ts'),
+        modal: resolve(__dirname, 'src/components/Modal/index.ts'),
+      },
+      name: 'saybboUI',
       formats: ['es', 'cjs'],
-      fileName: (format) => `index.${format === 'es' ? 'esm' : format}.js`,
+      fileName: (format, entryName) => {
+        const componentsList = ['button', 'modal'];
+        if (componentsList.includes(entryName)) {
+          return `components/${entryName}/index.${
+            format === 'es' ? 'esm' : format
+          }.
+            js`;
+        }
+        return `$
+          {entryName}.${format === 'es' ? 'esm' : format}.js`;
+      },
     },
     rollupOptions: {
       external: ['react', 'react-dom', '@emotion/react', '@emotion/styled'],
