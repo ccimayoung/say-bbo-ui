@@ -1,0 +1,18 @@
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+  font-family: 'Pretendard';
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 28px;
+  color: #292929;
+}
+
+@font-face {
+  font-display: swap;
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 400;
+  src: url('./assets/fonts/Pretendard-Regular.otf') format('opentype');
+}
