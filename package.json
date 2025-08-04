@@ -1,6 +1,6 @@
 {
   "name": "say-bbo-ui",
-  "version": "1.0.14",
+  "version": "1.0.15",
   "description": "A modern React UI component library with CSS-in-JS",
   "main": "dist/index.cjs.js",
   "files": [
