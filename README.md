@@ -112,8 +112,7 @@ import { Button, Modal } from 'say-bbo-ui';
 
 A versatile button component with multiple variants and sizes.
 
-**Preview:**
-![Button Components](./src/assets/images/buttonExample.png)
+<img src="./src/assets/images/buttonExample.png" alt="Button Components" width="600">
 
 ```tsx
 import { Button } from 'say-bbo-ui';
