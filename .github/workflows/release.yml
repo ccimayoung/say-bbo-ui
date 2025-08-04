@@ -1,0 +1,174 @@
+name: Release Package
+
+on:
+  push:
+    branches: [release]
+  pull_request:
+    branches: [release]
+
+jobs:
+  version-check:
+    runs-on: ubuntu-latest
+    outputs:
+      should-publish: ${{ steps.version-check.outputs.should-publish }}
+      current-version: ${{ steps.version-check.outputs.current-version }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Get package version
+        id: package-version
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          echo "current-version=$VERSION" >> $GITHUB_OUTPUT
+          echo "📦 Current package version: $VERSION"
+
+      - name: Check if version exists on npm
+        id: version-check
+        run: |
+          PACKAGE_NAME=$(node -p "require('./package.json').name")
+          CURRENT_VERSION="${{ steps.package-version.outputs.current-version }}"
+
+          echo "🔍 Checking if $PACKAGE_NAME@$CURRENT_VERSION exists on npm..."
+
+          if npm view "$PACKAGE_NAME@$CURRENT_VERSION" version 2>/dev/null; then
+            echo "❌ Version $CURRENT_VERSION already exists on npm!"
+            echo "should-publish=false" >> $GITHUB_OUTPUT
+            exit 1
+          else
+            echo "✅ Version $CURRENT_VERSION is new, ready to publish"
+            echo "should-publish=true" >> $GITHUB_OUTPUT
+          fi
+
+  test-and-build:
+    runs-on: ubuntu-latest
+    needs: version-check
+    if: needs.version-check.outputs.should-publish == 'true'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Type check
+        run: npm run type-check
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Build package
+        run: npm run build
+
+      - name: Build Storybook
+        run: npm run build-storybook
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist-files
+          path: |
+            dist/
+            storybook-static/
+
+  publish:
+    runs-on: ubuntu-latest
+    needs: [version-check, test-and-build]
+    if: github.ref == 'refs/heads/release' && needs.version-check.outputs.should-publish == 'true'
+    environment: production
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: dist-files
+
+      - name: Publish to npm
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Create GitHub Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ needs.version-check.outputs.current-version }}
+          release_name: Release v${{ needs.version-check.outputs.current-version }}
+          body: |
+            🎉 New release v${{ needs.version-check.outputs.current-version }}
+
+            ## 📦 Package
+            - npm: https://www.npmjs.com/package/say-bbo-ui/v/${{ needs.version-check.outputs.current-version }}
+            - Storybook: https://ccimayoung.github.io/say-bbo-ui
+
+            ## 🔧 Installation
+            ```bash
+            npm install say-bbo-ui@${{ needs.version-check.outputs.current-version }}
+            ```
+          draft: false
+          prerelease: false
+
+  deploy-storybook:
+    runs-on: ubuntu-latest
+    needs: [version-check, test-and-build, publish]
+    if: github.ref == 'refs/heads/release' && needs.version-check.outputs.should-publish == 'true'
+
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build Storybook
+        run: npm run build-storybook
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload to GitHub Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './storybook-static'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
