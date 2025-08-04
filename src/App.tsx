@@ -1,8 +1,9 @@
 import './App.css';
 import { useState } from 'react';
+
+import XSvg from './assets/icons/X.svg?react';
 import { Button } from './components/Button';
 import { Modal } from './components/Modal';
-import XSvg from './assets/icons/X.svg?react';
 
 function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);

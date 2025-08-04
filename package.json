@@ -1,40 +1,13 @@
 {
   "name": "say-bbo-ui",
-  "version": "1.0.0",
+  "version": "1.0.10",
   "description": "A modern React UI component library with CSS-in-JS",
-  "main": "dist/index.js",
-  "module": "dist/index.esm.js",
-  "types": "dist/index.d.ts",
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.esm.js",
-      "require": "./dist/index.js"
-    },
-    "./all": {
-      "types": "./dist/all.d.ts",
-      "import": "./dist/all.esm.js",
-      "require": "./dist/all.js"
-    },
-    "./button": {
-      "types": "./dist/button.d.ts",
-      "import": "./dist/button.esm.js",
-      "require": "./dist/button.js"
-    },
-    "./modal": {
-      "types": "./dist/modal.d.ts",
-      "import": "./dist/modal.esm.js",
-      "require": "./dist/modal.js"
-    },
-    "./styles": {
-      "types": "./dist/styles.d.ts",
-      "import": "./dist/styles.esm.js",
-      "require": "./dist/styles.js"
-    }
-  },
+  "main": "dist/index.cjs.js",
   "files": [
     "dist"
   ],
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
@@ -79,5 +52,22 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/index.esm.js",
+      "require": "./dist/index.cjs.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./Button": {
+      "import": "./dist/components/Button/index.esm.js",
+      "require": "./dist/components/Button/index.cjs.js",
+      "types": "./dist/components/Button/index.d.ts"
+    },
+    "./Modal": {
+      "import": "./dist/components/Modal/index.esm.js",
+      "require": "./dist/components/Modal/index.cjs.js",
+      "types": "./dist/components/Modal/index.d.ts"
+    }
   }
 }

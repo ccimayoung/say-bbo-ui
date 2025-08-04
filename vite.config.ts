@@ -2,44 +2,32 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import dts from 'vite-plugin-dts';
 import { resolve } from 'path';
-import svgr from 'vite-plugin-svgr';
 
 export default defineConfig({
   plugins: [
     react({
       jsxImportSource: '@emotion/react',
-      babel: {
-        plugins: ['@emotion/babel-plugin'],
-      },
+      babel: { plugins: ['@emotion/babel-plugin'] },
     }),
-    svgr({
-      svgrOptions: {
-        icon: true,
-      },
-    }),
-    dts({
-      insertTypesEntry: true,
-    }),
+    dts({ insertTypesEntry: true }),
   ],
   build: {
     lib: {
       entry: {
         index: resolve(__dirname, 'src/index.ts'),
-        button: resolve(__dirname, 'src/components/Button/index.ts'),
-        modal: resolve(__dirname, 'src/components/Modal/index.ts'),
+        Button: resolve(__dirname, 'src/components/Button/index.ts'),
+        Modal: resolve(__dirname, 'src/components/Modal/index.ts'),
+        styles: resolve(__dirname, 'src/styles/index.ts'),
       },
-      name: 'saybboUI',
+      name: 'say-bbo-ui',
       formats: ['es', 'cjs'],
       fileName: (format, entryName) => {
-        const componentsList = ['button', 'modal'];
-        if (componentsList.includes(entryName)) {
+        console.log(format, entryName);
+        if (['Button', 'Modal', 'styled'].includes(entryName)) {
           return `components/${entryName}/index.${
             format === 'es' ? 'esm' : format
-          }.
-            js`;
-        }
-        return `$
-          {entryName}.${format === 'es' ? 'esm' : format}.js`;
+          }.js`;
+        } else return `${entryName}.${format === 'es' ? 'esm' : format}.js`;
       },
     },
     rollupOptions: {
@@ -51,6 +39,7 @@ export default defineConfig({
           '@emotion/react': 'emotionReact',
           '@emotion/styled': 'emotionStyled',
         },
+        chunkFileNames: 'components/[name]/[name]-[hash].js',
       },
     },
   },

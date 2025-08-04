@@ -2,7 +2,7 @@ import React from 'react';
 import { css } from '@emotion/react';
 import { ButtonProps } from '../../types';
 import { handleFontStyle } from '../../styles/font';
-import { defaultTheme } from '../../all';
+import { defaultTheme } from '../../styles';
 
 export const Button: React.FC<ButtonProps> = ({
   label,
