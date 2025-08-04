@@ -1,7 +1,6 @@
 import './App.css';
 import { useState } from 'react';
 
-import XSvg from './assets/icons/X.svg?react';
 import { Button } from './components/Button';
 import { Modal } from './components/Modal';
 
@@ -22,7 +21,7 @@ function App() {
             marginBottom: '1rem',
           }}
         >
-          <Button variant="primary" label="Primary" startIcon={<XSvg />} />
+          <Button variant="primary" label="Primary" startIcon={<XIcon />} />
           <Button variant="outline" label="Outline" />
           <Button variant="underline" label="Underline" />
           <Button variant="transparent" label="Transparent" />
@@ -90,3 +89,9 @@ function App() {
 }
 
 export default App;
+
+const XIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+    <path d="M10.828 11.771c.26.26.682.26.942 0 .26-.26.26-.682 0-.942L8.942 8l2.828-2.828c.26-.26.26-.682 0-.942-.26-.26-.682-.26-.942 0L8 7.058 5.171 4.229c-.26-.26-.682-.26-.942 0-.26.26-.26.682 0 .942L7.058 8l-2.829 2.828c-.26.26-.26.682 0 .942.26.26.682.26.942 0L8 8.943l2.828 2.828z" />
+  </svg>
+);

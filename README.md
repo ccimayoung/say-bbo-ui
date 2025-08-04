@@ -4,7 +4,20 @@ A modern React UI component library built with TypeScript, Emotion, and Vite.
 
 **✨ Supports React 18 & 19**
 
+### Development Status
+
+- Button component is fully developed and ready for production use. Additional components will be added soon to expand the library's functionality.
+
+### Available Components
+
+- **Button** ✅ Complete (Primary, Outline, Underline, Transparent variants)
+- **Modal** 🚧 In progress
+- **Input** 📅 Coming soon
+- **Select** 📅 Coming soon
+
 ## 📚 [View Components in Storybook →](https://ccimayoung.github.io/say-bbo-ui)
+
+## 📚 [Github →](https://github.com/ccimayoung/say-bbo-ui)
 
 ## Features
 
