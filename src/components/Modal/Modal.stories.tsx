@@ -48,45 +48,12 @@ const meta: Meta<typeof Modal> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-// 스토리북용 래퍼 컴포넌트
-const ModalWrapper = ({ children, ...props }: any) => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const handleClose = () => {
-    console.log('Modal closing...'); // 디버그 로그
-    setIsOpen(false);
-    // props.onClose가 있다면 호출 (Actions 탭용)
-    if (props.onClose) {
-      props.onClose();
-    }
-  };
-
-  // props에서 isOpen과 onClose를 제외한 나머지만 전달
-  const { isOpen: _, onClose: __, ...modalProps } = props;
-
-  return (
-    <div style={{ padding: '2rem' }}>
-      <Button
-        label="Open Modal"
-        variant="primary"
-        onClick={() => {
-          console.log('Modal opening...'); // 디버그 로그
-          setIsOpen(true);
-        }}
-      />
-      <Modal {...modalProps} isOpen={isOpen} onClose={handleClose}>
-        {children}
-      </Modal>
-    </div>
-  );
-};
-
 // 기본 모달
 export const Default: Story = {
   args: {
     closeOnOverlayClick: true,
     closeOnEscape: true,
-    isOpen: true, // 기본적으로 열려있게 설정
+    isOpen: false, // 기본적으로 열려있게 설정
     title: '기본 모달',
   },
   render: (args) => {

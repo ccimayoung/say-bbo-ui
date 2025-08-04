@@ -31,13 +31,20 @@ export default defineConfig({
       },
     },
     rollupOptions: {
-      external: ['react', 'react-dom', '@emotion/react', '@emotion/styled'],
+      external: (id) => {
+        return ['react', 'react-dom', 'react/', '@emotion/'].some(
+          (pkg) => id === pkg || id.startsWith(pkg)
+        );
+      },
       output: {
         globals: {
           react: 'React',
           'react-dom': 'ReactDOM',
+          'react/jsx-runtime': 'jsxRuntime',
+          'react-dom/client': 'ReactDOM',
           '@emotion/react': 'emotionReact',
           '@emotion/styled': 'emotionStyled',
+          '@emotion/react/jsx-runtime': 'emotionJsxRuntime',
         },
         chunkFileNames: 'components/[name]/[name]-[hash].js',
       },
