@@ -96,6 +96,10 @@ jobs:
     if: github.ref == 'refs/heads/release' && needs.version-check.outputs.should-publish == 'true'
     environment: production
 
+    permissions:
+      contents: write
+      packages: write
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -126,25 +130,23 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Create GitHub Release
-        uses: actions/create-release@v1
+        run: |
+          gh release create "v${{ needs.version-check.outputs.current-version }}" \
+            --title "Release v${{ needs.version-check.outputs.current-version }}" \
+            --notes "🎉 New release v${{ needs.version-check.outputs.current-version }}
+
+          ## 📦 Package
+          - npm: https://www.npmjs.com/package/say-bbo-ui/v/${{ needs.version-check.outputs.current-version }}
+          - Storybook: https://ccimayoung.github.io/say-bbo-ui
+
+          ## 🔧 Installation
+          \`\`\`bash
+          npm install say-bbo-ui@${{ needs.version-check.outputs.current-version }}
+          \`\`\`" \
+            --draft=false \
+            --prerelease=false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: v${{ needs.version-check.outputs.current-version }}
-          release_name: Release v${{ needs.version-check.outputs.current-version }}
-          body: |
-            🎉 New release v${{ needs.version-check.outputs.current-version }}
-
-            ## 📦 Package
-            - npm: https://www.npmjs.com/package/say-bbo-ui/v/${{ needs.version-check.outputs.current-version }}
-            - Storybook: https://ccimayoung.github.io/say-bbo-ui
-
-            ## 🔧 Installation
-            ```bash
-            npm install say-bbo-ui@${{ needs.version-check.outputs.current-version }}
-            ```
-          draft: false
-          prerelease: false
 
   deploy-storybook:
     runs-on: ubuntu-latest
