@@ -2,9 +2,14 @@
 
 A modern React UI component library built with TypeScript, Emotion, and Vite.
 
+**✨ Supports React 18 & 19**
+
+## 📚 [View Components in Storybook →](https://ccimayoung.github.io/say-bbo-ui)
+
 ## Features
 
 - 🎨 **Modern Design**: Clean and accessible components
+- ⚛️ **React 18 & 19**: Full compatibility with latest React versions
 - 📦 **Tree Shaking**: Import only what you need
 - 🎯 **TypeScript**: Full type safety
 - 🎭 **Emotion**: CSS-in-JS styling
@@ -14,8 +19,6 @@ A modern React UI component library built with TypeScript, Emotion, and Vite.
 
 ## Installation
 
-### Install all components
-
 ```bash
 npm install say-bbo-ui
 # or
@@ -24,17 +27,12 @@ yarn add say-bbo-ui
 pnpm add say-bbo-ui
 ```
 
-### Install individual components
+### Peer Dependencies
+
+Make sure you have these installed:
 
 ```bash
-# Button only
-npm install say-bbo-ui/button
-
-# Modal only
-npm install say-bbo-ui/modal
-
-# All components
-npm install say-bbo-ui/all
+npm install react react-dom @emotion/react @emotion/styled
 ```
 
 ## Usage
@@ -42,6 +40,7 @@ npm install say-bbo-ui/all
 ### Import all components
 
 ```tsx
+import React, { useState } from 'react';
 import { Button, Modal } from 'say-bbo-ui';
 
 function App() {
@@ -61,15 +60,38 @@ function App() {
 ### Import individual components
 
 ```tsx
-// Button only
-import { Button } from 'say-bbo-ui/button';
+// Recommended: Import from main entry (tree-shaking supported)
+import { Button, Modal } from 'say-bbo-ui';
 
-// Modal only
-import { Modal } from 'say-bbo-ui/modal';
-
-// All components
-import { Button, Modal } from 'say-bbo-ui/all';
+// Alternative: Import specific components if your bundler supports it
+// import { Button } from 'say-bbo-ui/Button';  // May not work in all environments
 ```
+
+## Tree Shaking
+
+This library supports tree shaking out of the box with modern bundlers:
+
+```tsx
+// ✅ Only Button code will be included in your bundle
+import { Button } from 'say-bbo-ui';
+
+// ✅ Only Button and Modal code will be included
+import { Button, Modal } from 'say-bbo-ui';
+```
+
+**How it works:**
+
+- The library is built as ESM modules with proper `sideEffects: false`
+- Modern bundlers (Webpack 5+, Vite, Rollup) automatically remove unused exports
+- You only pay for what you use, even when importing from the main entry
+
+**Supported bundlers:**
+
+- ✅ Vite
+- ✅ Webpack 5+
+- ✅ Rollup
+- ✅ esbuild
+- ⚠️ Webpack 4 (limited support)
 
 ## Components
 
@@ -80,16 +102,37 @@ A versatile button component with multiple variants and sizes.
 ```tsx
 import { Button } from 'say-bbo-ui';
 
-<Button variant="primary" size="md" onClick={handleClick}>
-  Click me
-</Button>;
+// Basic usage
+<Button onClick={handleClick}>Click me</Button>
+
+// With variants
+<Button variant="primary">Primary Button</Button>
+<Button variant="outline">Outline Button</Button>
+<Button variant="underline">Underline Button</Button>
+<Button variant="transparent">Transparent Button</Button>
+
+// With sizes
+<Button size="small">Small</Button>
+<Button size="medium">Medium</Button>
+<Button size="large">Large</Button>
+
+// With icons
+<Button startIcon={<Icon />}>Start Icon</Button>
+<Button endIcon={<Icon />}>End Icon</Button>
+
+// Disabled state
+<Button disabled>Disabled Button</Button>
 ```
 
 **Props:**
 
-- `variant`: 'primary' | 'secondary' | 'outline' | 'ghost'
-- `size`: 'sm' | 'md' | 'lg'
+- `label`: string - Button text content
+- `variant`: 'primary' | 'outline' | 'underline' | 'transparent' (default: 'primary')
+- `size`: 'small' | 'medium' | 'large' (default: 'medium')
 - `disabled`: boolean
+- `onClick`: () => void
+- `startIcon`: ReactNode - Icon to display before text
+- `endIcon`: ReactNode - Icon to display after text
 - All standard button HTML attributes
 
 ### Modal
@@ -99,52 +142,67 @@ A modal dialog component with customizable size and behavior.
 ```tsx
 import { Modal } from 'say-bbo-ui';
 
-<Modal
-  isOpen={isOpen}
-  onClose={() => setIsOpen(false)}
-  title="My Modal"
-  size="md"
->
+<Modal isOpen={isOpen} onClose={() => setIsOpen(false)} title="My Modal">
   <p>Modal content</p>
 </Modal>;
 ```
 
 **Props:**
 
-- `isOpen`: boolean (required)
-- `onClose`: () => void (required)
-- `title`: string
-- `size`: 'sm' | 'md' | 'lg' | 'xl'
-- `closeOnOverlayClick`: boolean (default: true)
-- `closeOnEscape`: boolean (default: true)
+- `isOpen`: boolean (required) - Controls modal visibility
+- `onClose`: () => void (required) - Called when modal should close
+- `title`: string - Modal title
+- `children`: ReactNode - Modal content
+- Additional props coming soon...
+
+## Styling
+
+### Theme
+
+The library uses Emotion for styling with a built-in theme system:
+
+```tsx
+import { defaultTheme } from 'say-bbo-ui';
+
+// Access theme colors, fonts, etc.
+console.log(defaultTheme.colors.primary.main);
+```
+
+### Custom Styling
+
+Components accept standard HTML attributes and can be styled with:
+
+- CSS classes
+- Emotion's `css` prop
+- Styled components
 
 ## Development
 
 ### Prerequisites
 
 - Node.js 18+
-- pnpm
+- npm/yarn/pnpm
 
 ### Setup
 
 ```bash
 # Install dependencies
-pnpm install
+npm install
 
 # Start development server
-pnpm dev
+npm run dev
 
 # Start Storybook
-pnpm storybook
+npm run storybook
 
 # Build library
-pnpm build
+npm run build
 
 # Type check
-pnpm type-check
+npm run type-check
 
 # Lint
-pnpm lint
+npm run lint
 ```
 
 ### Project Structure
@@ -157,23 +215,45 @@ say-bbo-ui/
 │   │   └── Modal/
 │   ├── types/              # TypeScript type definitions
 │   ├── styles/             # Theme and styling utilities
-│   ├── all/                # All components export
-│   ├── button/             # Button only export
-│   ├── modal/              # Modal only export
-│   └── styles/             # Styles only export
-├── .storybook/             # Storybook configuration
+│   └── index.ts            # Main entry point
 ├── dist/                   # Built files
+│   ├── index.esm.js        # ESM build
+│   ├── index.cjs.js        # CommonJS build
+│   ├── index.d.ts          # Type definitions
+│   └── components/         # Individual component builds
+├── .storybook/             # Storybook configuration
 └── package.json
 ```
+
+## Browser Support
+
+- Modern browsers that support ES2020
+- React 18 or React 19
 
 ## Contributing
 
 1. Fork the repository
-2. Create a feature branch
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
 3. Make your changes
 4. Add tests if applicable
-5. Submit a pull request
+5. Run `npm run lint` and `npm run type-check`
+6. Commit your changes (`git commit -m 'Add amazing feature'`)
+7. Push to the branch (`git push origin feature/amazing-feature`)
+8. Open a Pull Request
 
 ## License
 
-MIT License - see LICENSE file for details.
+MIT License - see [LICENSE](LICENSE) file for details.
+
+## Changelog
+
+### v1.0.12
+
+- ✨ Added React 19 support
+- 🔧 Improved TypeScript auto-import with `typesVersions`
+- 📦 Better tree shaking support
+
+### v1.0.11
+
+- 🐛 Fixed peerDependencies for React compatibility
+- 📝 Updated documentation
