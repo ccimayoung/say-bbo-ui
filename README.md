@@ -1,4 +1,4 @@
-# Say-Bbo-UI
+# say-bbo-ui
 
 A modern React UI component library built with TypeScript, Emotion, and Vite.
 
@@ -112,29 +112,32 @@ import { Button, Modal } from 'say-bbo-ui';
 
 A versatile button component with multiple variants and sizes.
 
+**Preview:**
+![Button Components](./src/assets/images/buttonExample.png)
+
 ```tsx
 import { Button } from 'say-bbo-ui';
 
 // Basic usage
-<Button onClick={handleClick}>Click me</Button>
+<Button label="Click me" onClick={handleClick} />
 
 // With variants
-<Button variant="primary">Primary Button</Button>
-<Button variant="outline">Outline Button</Button>
-<Button variant="underline">Underline Button</Button>
-<Button variant="transparent">Transparent Button</Button>
+<Button variant="primary" label="Primary Button" />
+<Button variant="outline" label="Outline Button" />
+<Button variant="underline" label="Underline Button" />
+<Button variant="transparent" label="Transparent Button" />
 
 // With sizes
-<Button size="small">Small</Button>
-<Button size="medium">Medium</Button>
-<Button size="large">Large</Button>
+<Button size="small" label="Small" />
+<Button size="medium" label="Medium" />
+<Button size="large" label="Large" />
 
 // With icons
-<Button startIcon={<Icon />}>Start Icon</Button>
-<Button endIcon={<Icon />}>End Icon</Button>
+<Button startIcon={<Icon />} label="Start Icon" />
+<Button endIcon={<Icon />} label="End Icon" />
 
 // Disabled state
-<Button disabled>Disabled Button</Button>
+<Button disabled label="Disabled Button" />
 ```
 
 **Props:**
