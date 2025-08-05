@@ -3,9 +3,16 @@ import { useState } from 'react';
 
 import { Button } from './components/Button';
 import { Modal } from './components/Modal';
+import { Select } from './Select';
 
 function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const options = [
+    { label: 'Option 1', value: 'option1' },
+    { label: 'Option 2', value: 'option2' },
+    { label: 'Option 3', value: 'option3' },
+  ];
 
   return (
     <div style={{ padding: '2rem', fontFamily: 'Arial, sans-serif' }}>
@@ -49,6 +56,26 @@ function App() {
           <Button disabled variant="transparent" label="transparent" />
         </div>
       </section>
+
+      <Select
+        size="small"
+        options={options}
+        placeholder="Select an option"
+        width="200px"
+      />
+      <Select
+        size="medium"
+        options={[]}
+        placeholder="Select an option"
+        width="200px"
+      />
+      <Select
+        size="large"
+        options={options}
+        placeholder="Select an option"
+        width="200px"
+        disabled
+      />
 
       <section>
         <h2>Modal Demo</h2>

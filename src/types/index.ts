@@ -46,6 +46,7 @@ export interface Theme {
       gray100: string;
       gray200: string;
       gray300: string;
+      gray400: string;
     };
     status: {
       success: string;
@@ -58,5 +59,15 @@ export interface Theme {
     medium: string;
     large: string;
     circle: string;
+  };
+  padding: {
+    small: string;
+    medium: string;
+    large: string;
+  };
+  bodyFontSize: {
+    small: string;
+    medium: string;
+    large: string;
   };
 }

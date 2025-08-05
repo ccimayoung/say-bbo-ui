@@ -48,7 +48,7 @@ type fontProps = {
   padding?: string;
 };
 
-type fontHandleType =
+export type fontHandleType =
   | 'Body_S'
   | 'Body_M'
   | 'Body_M_Semibold'

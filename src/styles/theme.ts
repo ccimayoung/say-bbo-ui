@@ -12,9 +12,10 @@ export const defaultTheme: Theme = {
     },
     gray: {
       gray000: '#222222',
-      gray100: '#444444',
-      gray200: '#666666',
-      gray300: '#999999',
+      gray100: '#707070',
+      gray200: '#AAAAAA',
+      gray300: '#BEBEBE',
+      gray400: '#E3E3E3',
     },
     status: {
       success: '#10b981',
@@ -27,5 +28,15 @@ export const defaultTheme: Theme = {
     medium: '0.375rem',
     large: '0.5rem',
     circle: '9999px',
+  },
+  padding: {
+    small: '4px 8px',
+    medium: '6px 12px',
+    large: '8px 16px',
+  },
+  bodyFontSize: {
+    small: 'Body_S',
+    medium: 'Body_M',
+    large: 'Body_L',
   },
 };

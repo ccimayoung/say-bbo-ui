@@ -1,8 +1,8 @@
 import React from 'react';
 import { css } from '@emotion/react';
-import { ButtonProps } from '../../types';
-import { handleFontStyle } from '../../styles/font';
+import { fontHandleType, handleFontStyle } from '../../styles/font';
 import { defaultTheme } from '../../styles';
+import { ButtonProps } from './buttonTypes';
 
 export const Button: React.FC<ButtonProps> = ({
   label,
@@ -21,7 +21,7 @@ export const Button: React.FC<ButtonProps> = ({
 
   return (
     <button
-      css={[defaultStyle, handleVariantStyles(variant), handleSizeStyles(size)]}
+      css={[defaultStyle, handleVariantStyles(variant), sizeStyle(size)]}
       disabled={disabled}
       onClick={handleClick}
       {...props}
@@ -120,25 +120,8 @@ const handleVariantStyles = (variant: ButtonProps['variant']) => {
   }
 };
 
-const handleSizeStyles = (size: ButtonProps['size']) => {
-  switch (size) {
-    case 'small':
-      return css`
-        padding: 4px 8px;
-        border-radius: ${defaultTheme.borderRadius.small};
-        ${handleFontStyle('Body_S')}
-      `;
-    case 'medium':
-      return css`
-        padding: 6px 12px;
-        border-radius: ${defaultTheme.borderRadius.medium};
-        ${handleFontStyle('Body_M')}
-      `;
-    case 'large':
-      return css`
-        padding: 8px 16px;
-        border-radius: ${defaultTheme.borderRadius.large};
-        ${handleFontStyle('Body_L')}
-      `;
-  }
-};
+const sizeStyle = (size: ButtonProps['size'] = 'small') => css`
+  padding: ${defaultTheme.padding[size]};
+  border-radius: ${defaultTheme.borderRadius[size]};
+  ${handleFontStyle(defaultTheme.bodyFontSize[size] as fontHandleType)}
+`;
