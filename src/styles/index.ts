@@ -2,3 +2,4 @@
 export { defaultTheme } from './theme';
 export type { Theme } from '../types';
 export { Font } from './font';
+export * from './scrollbar';

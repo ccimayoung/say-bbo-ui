@@ -4,16 +4,13 @@ A modern React UI component library built with TypeScript, Emotion, and Vite.
 
 **✨ Supports React 18 & 19**
 
-### Development Status
-
-- Button component is fully developed and ready for production use. Additional components will be added soon to expand the library's functionality.
-
 ### Available Components
 
 - **Button** ✅ Complete (Primary, Outline, Underline, Transparent variants)
+- **Icon** ✅ Complete (SVG icon system, customizable)
+- **Select** 🔺 Limited (Single select, multi-select coming soon)
 - **Modal** 🚧 In progress
 - **Input** 📅 Coming soon
-- **Select** 📅 Coming soon
 
 ## 📚 [View Components in Storybook →](https://ccimayoung.github.io/say-bbo-ui)
 
@@ -54,10 +51,15 @@ npm install react react-dom @emotion/react @emotion/styled
 
 ```tsx
 import React, { useState } from 'react';
-import { Button, Modal } from 'say-bbo-ui';
+import { Button, Modal, Select, Icon } from 'say-bbo-ui';
 
 function App() {
   const [isOpen, setIsOpen] = useState(false);
+  const options = [
+    { label: 'Option 1', value: '1' },
+    { label: 'Option 2', value: '2' },
+    { label: 'Option 3', value: '3' },
+  ];
 
   return (
     <div>
@@ -65,6 +67,8 @@ function App() {
       <Modal isOpen={isOpen} onClose={() => setIsOpen(false)} title="My Modal">
         <p>Modal content here</p>
       </Modal>
+      <Select placeholder="Select an option" options={options} />
+      <Icon iconName="PlusIcon" width={20} height={20} />
     </div>
   );
 }
@@ -74,37 +78,8 @@ function App() {
 
 ```tsx
 // Recommended: Import from main entry (tree-shaking supported)
-import { Button, Modal } from 'say-bbo-ui';
-
-// Alternative: Import specific components if your bundler supports it
-// import { Button } from 'say-bbo-ui/Button';  // May not work in all environments
+import { Button, Modal, Select, Icon } from 'say-bbo-ui';
 ```
-
-## Tree Shaking
-
-This library supports tree shaking out of the box with modern bundlers:
-
-```tsx
-// ✅ Only Button code will be included in your bundle
-import { Button } from 'say-bbo-ui';
-
-// ✅ Only Button and Modal code will be included
-import { Button, Modal } from 'say-bbo-ui';
-```
-
-**How it works:**
-
-- The library is built as ESM modules with proper `sideEffects: false`
-- Modern bundlers (Webpack 5+, Vite, Rollup) automatically remove unused exports
-- You only pay for what you use, even when importing from the main entry
-
-**Supported bundlers:**
-
-- ✅ Vite
-- ✅ Webpack 5+
-- ✅ Rollup
-- ✅ esbuild
-- ⚠️ Webpack 4 (limited support)
 
 ## Components
 
@@ -132,8 +107,9 @@ import { Button } from 'say-bbo-ui';
 <Button size="large" label="Large" />
 
 // With icons
-<Button startIcon={<Icon />} label="Start Icon" />
-<Button endIcon={<Icon />} label="End Icon" />
+<Button startIcon={<Icon iconName="PlusIcon" />} label="Start Icon" />
+<Button endIcon={<Icon iconName="ArrowIcon" />} label="End Icon" />
+<Button startIcon={<Icon iconName="PlusIcon" />} endIcon={<Icon iconName="ArrowIcon" />} label="Both" />
 
 // Disabled state
 <Button disabled label="Disabled Button" />
@@ -150,25 +126,58 @@ import { Button } from 'say-bbo-ui';
 - `endIcon`: ReactNode - Icon to display after text
 - All standard button HTML attributes
 
-### Modal
+### Select 🔺
 
-A modal dialog component with customizable size and behavior.
+A dropdown select component. (Currently single-select, multi-select is planned)
 
 ```tsx
-import { Modal } from 'say-bbo-ui';
+import { Select } from 'say-bbo-ui';
 
-<Modal isOpen={isOpen} onClose={() => setIsOpen(false)} title="My Modal">
-  <p>Modal content</p>
-</Modal>;
+const options = [
+  { label: 'Seoul', value: 'seoul' },
+  { label: 'Busan', value: 'busan' },
+  { label: 'Incheon', value: 'incheon' },
+];
+
+<Select
+  placeholder="Select a region"
+  options={options}
+  size="medium"
+  width="240px"
+/>;
 ```
 
 **Props:**
 
-- `isOpen`: boolean (required) - Controls modal visibility
-- `onClose`: () => void (required) - Called when modal should close
-- `title`: string - Modal title
-- `children`: ReactNode - Modal content
-- Additional props coming soon...
+- `placeholder`: string - Placeholder text
+- `options`: { label: string; value: string }[] - Option list
+- `size`: 'small' | 'medium' | 'large' (default: 'medium')
+- `width`: string (optional)
+- `disabled`: boolean (optional)
+- All standard select HTML attributes (except `size`)
+
+> ⚠️ **Note:** Multi-select, search, and async options are planned for future releases.
+
+### Icon
+
+A flexible SVG icon component. All icons are registered in the library and can be used by name.
+
+```tsx
+import { Icon } from 'say-bbo-ui';
+
+<Icon iconName="PlusIcon" width={24} height={24} />
+<Icon iconName="XIcon" width={20} height={20} />
+<Icon iconName="DownArrowIcon" width={16} height={16} rotate={90} />
+```
+
+**Props:**
+
+- `iconName`: string - Name of the icon (see Storybook for available icons)
+- `width`: number (default: 16)
+- `height`: number (default: 16)
+- `rotate`: number (default: 0)
+
+---
 
 ## Styling
 
@@ -191,76 +200,15 @@ Components accept standard HTML attributes and can be styled with:
 - Emotion's `css` prop
 - Styled components
 
-## Development
-
-### Prerequisites
-
-- Node.js 18+
-- npm/yarn/pnpm
-
-### Setup
-
-```bash
-# Install dependencies
-npm install
-
-# Start development server
-npm run dev
-
-# Start Storybook
-npm run storybook
-
-# Build library
-npm run build
-
-# Type check
-npm run type-check
-
-# Lint
-npm run lint
-```
-
-### Project Structure
-
-```
-say-bbo-ui/
-├── src/
-│   ├── components/          # React components
-│   │   ├── Button/
-│   │   └── Modal/
-│   ├── types/              # TypeScript type definitions
-│   ├── styles/             # Theme and styling utilities
-│   └── index.ts            # Main entry point
-├── dist/                   # Built files
-│   ├── index.esm.js        # ESM build
-│   ├── index.cjs.js        # CommonJS build
-│   ├── index.d.ts          # Type definitions
-│   └── components/         # Individual component builds
-├── .storybook/             # Storybook configuration
-└── package.json
-```
-
-## Browser Support
-
-- Modern browsers that support ES2020
-- React 18 or React 19
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Make your changes
-4. Add tests if applicable
-5. Run `npm run lint` and `npm run type-check`
-6. Commit your changes (`git commit -m 'Add amazing feature'`)
-7. Push to the branch (`git push origin feature/amazing-feature`)
-8. Open a Pull Request
-
-## License
-
-MIT License - see [LICENSE](LICENSE) file for details.
-
 ## Changelog
+
+### v1.0.18
+
+- ✨ Added Select component (Beta; supports single selection, multi-select coming soon)
+- ✨ Added Icon component (SVG-based icon system using name-based access)
+- 🧹 Improved Storybook structure and usability for Button, Select, and Icon components
+- ♻️ Refactored props and types for Button, Select, and Icon components
+- 🐛 Fixed various style and layout bugs
 
 ### v1.0.12
 

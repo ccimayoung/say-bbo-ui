@@ -1,6 +1,6 @@
 {
   "name": "say-bbo-ui",
-  "version": "1.0.17",
+  "version": "1.0.18",
   "description": "A modern React UI component library with CSS-in-JS",
   "main": "dist/index.cjs.js",
   "files": [
@@ -64,6 +64,14 @@
     "./Modal": {
       "import": "./dist/components/Modal/index.esm.js",
       "require": "./dist/components/Modal/index.cjs.js"
+    },
+    "./Icon": {
+      "import": "./dist/components/Icon/index.esm.js",
+      "require": "./dist/components/Icon/index.cjs.js"
+    },
+    "./Select": {
+      "import": "./dist/components/Select/index.esm.js",
+      "require": "./dist/components/Select/index.cjs.js"
     }
   },
   "peerDependencies": {
@@ -82,6 +90,12 @@
       ],
       "Modal": [
         "./dist/components/Modal/index.d.ts"
+      ],
+      "Icon": [
+        "./dist/components/Icon/index.d.ts"
+      ],
+      "Select": [
+        "./dist/components/Select/index.d.ts"
       ]
     }
   }

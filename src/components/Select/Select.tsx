@@ -1,12 +1,14 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { css } from '@emotion/react';
-import { defaultTheme } from '../styles';
-import { fontHandleType, handleFontStyle } from '../styles/font';
 import { OptionType, SelectProps } from './selectTypes';
+import { useSwitch } from '../../hooks/useSwitch';
+import { useClickOutside } from '../../hooks/useClickOutside';
 import { Icon } from '../Icon/Icon';
-import { columnStyle, rowStyle } from '../styles/layout';
-import { useSwitch } from '../hooks/useSwitch';
-import { useClickOutside } from '../hooks/useClickOutside';
+import { columnStyle, rowStyle } from '../../styles/layout';
+import { defaultTheme } from '../../styles';
+import { fontHandleType, handleFontStyle } from '../../styles/font';
+import { Z_INDEX } from '../../constants/z-Index';
+import { scrollbarStyle } from '../../styles';
 
 export const Select: React.FC<SelectProps> = ({
   size = 'medium',
@@ -38,9 +40,7 @@ export const Select: React.FC<SelectProps> = ({
       {...props}
     >
       <section
-        css={[
-          selectBoxStyle(size, isOpened, selectedOption === null, disabled),
-        ]}
+        css={[valueBoxStyle(size, isOpened, selectedOption === null, disabled)]}
         onClick={handleBoxClick}
       >
         {selectedOption?.label || placeholder}
@@ -48,14 +48,17 @@ export const Select: React.FC<SelectProps> = ({
       </section>
 
       {isOpened && (
-        <section css={optionListStyle(size, disabled)}>
+        <section css={optionBoxStyle(size, disabled)}>
           {options.length === 0 ? (
             <div css={noOptionsStyle(size)}>No Options</div>
           ) : (
             options.map((option) => (
               <section
                 key={option.value}
-                css={optionItemStyle(size)}
+                css={optionItemStyle(
+                  size,
+                  option.value === selectedOption?.value
+                )}
                 onClick={() => handleOptionClick(option)}
               >
                 {option.label}
@@ -76,9 +79,10 @@ const defaultWrapperStyle = (width?: string, disabled?: boolean) => css`
   opacity: ${disabled ? 0.6 : 1};
   transition: all 0.2s ease-in-out;
   gap: 2px;
+  position: relative;
 `;
 
-const selectBoxStyle = (
+const valueBoxStyle = (
   size: SelectProps['size'] = 'medium',
   isOpened: boolean,
   isPlaceholder: boolean,
@@ -98,26 +102,41 @@ const selectBoxStyle = (
       : defaultTheme.colors.gray.gray200};
   justify-content: space-between;
   padding: ${defaultTheme.padding[size]};
+  box-sizing: border-box;
 `;
 
-const optionListStyle = (
+const optionBoxStyle = (
   size: SelectProps['size'] = 'medium',
   disabled?: boolean
 ) => css`
-  ${columnStyle}
+  position: absolute;
+  top: calc(100% + 2px);
   width: 100%;
+  background-color: ${defaultTheme.colors.white};
   border-radius: ${defaultTheme.borderRadius[size]};
   border: 1px solid
     ${disabled
       ? defaultTheme.colors.gray.gray400
       : defaultTheme.colors.gray.gray200};
+  max-height: 160px;
+  overflow-y: auto;
+  z-index: ${Z_INDEX.selectOption};
+  ${scrollbarStyle}
 `;
 
-const optionItemStyle = (size: SelectProps['size'] = 'medium') => css`
+const optionItemStyle = (
+  size: SelectProps['size'] = 'medium',
+  isSelected: boolean
+) => css`
   width: 100%;
+  position: relative;
+  box-sizing: border-box;
   padding: ${defaultTheme.padding[size]};
   transition: background 0.1s;
   ${handleFontStyle(defaultTheme.bodyFontSize[size] as fontHandleType)}
+  color: ${isSelected
+    ? defaultTheme.colors.primary.main
+    : defaultTheme.colors.black};
   &:hover {
     background: ${defaultTheme.colors.primary.hover};
     color: ${defaultTheme.colors.white};
@@ -129,6 +148,7 @@ const optionItemStyle = (size: SelectProps['size'] = 'medium') => css`
 `;
 
 const noOptionsStyle = (size: SelectProps['size'] = 'medium') => css`
+  width: 100%;
   height: 40px;
   display: flex;
   align-items: center;

@@ -1,8 +1,12 @@
 import { DownArrowIcon } from './iconFile/DownArrowIcon';
+import { PlusIcon } from './iconFile/PlusIcon';
+import { XIcon } from './iconFile/XIcon ';
 import { IconProps } from './iconTypes';
 
 export const ICON_COMPONENTS = {
   DownArrowIcon,
+  PlusIcon,
+  XIcon,
 } as const;
 
 export type iconNameType = keyof typeof ICON_COMPONENTS;

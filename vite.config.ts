@@ -17,13 +17,17 @@ export default defineConfig({
         index: resolve(__dirname, 'src/index.ts'),
         Button: resolve(__dirname, 'src/components/Button/index.ts'),
         Modal: resolve(__dirname, 'src/components/Modal/index.ts'),
+        Select: resolve(__dirname, 'src/components/Select/index.ts'),
+        Icon: resolve(__dirname, 'src/components/Icon/index.ts'),
         styles: resolve(__dirname, 'src/styles/index.ts'),
       },
       name: 'say-bbo-ui',
       formats: ['es', 'cjs'],
       fileName: (format, entryName) => {
         console.log(format, entryName);
-        if (['Button', 'Modal', 'styled'].includes(entryName)) {
+        if (
+          ['Button', 'Modal', 'Select', 'Icon', 'styled'].includes(entryName)
+        ) {
           return `components/${entryName}/index.${
             format === 'es' ? 'esm' : format
           }.js`;

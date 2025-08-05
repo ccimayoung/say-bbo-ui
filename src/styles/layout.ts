@@ -5,7 +5,6 @@ export const rowStyle = css`
   flex-direction: row;
   position: relative;
   width: 100%;
-
   align-items: center;
 `;
 

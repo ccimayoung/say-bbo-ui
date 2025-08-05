@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Button } from './Button';
 
-// 예시 아이콘 컴포넌트
 const PlusIcon = () => (
   <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
     <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
@@ -53,92 +52,6 @@ const meta: Meta<typeof Button> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-// 기본 버튼들
-export const Primary: Story = {
-  args: {
-    label: 'Primary Button',
-    variant: 'primary',
-  },
-};
-
-export const Outline: Story = {
-  args: {
-    label: 'Outline Button',
-    variant: 'outline',
-  },
-};
-
-export const Underline: Story = {
-  args: {
-    label: 'Underline Button',
-    variant: 'underline',
-  },
-};
-
-export const Transparent: Story = {
-  args: {
-    label: 'Transparent Button',
-    variant: 'transparent',
-  },
-};
-
-// 사이즈별
-export const Small: Story = {
-  args: {
-    label: 'Small Button',
-    size: 'small',
-  },
-};
-
-export const Medium: Story = {
-  args: {
-    label: 'Medium Button',
-    size: 'medium',
-  },
-};
-
-export const Large: Story = {
-  args: {
-    label: 'Large Button',
-    size: 'large',
-  },
-};
-
-// 상태별
-export const Disabled: Story = {
-  args: {
-    label: 'Disabled Button',
-    disabled: true,
-  },
-};
-
-// 아이콘 버튼들
-export const WithStartIcon: Story = {
-  args: {
-    label: 'Add Item',
-    startIcon: <PlusIcon />,
-    variant: 'primary',
-  },
-};
-
-export const WithEndIcon: Story = {
-  args: {
-    label: 'Continue',
-    endIcon: <ArrowIcon />,
-    variant: 'primary',
-  },
-};
-
-export const WithBothIcons: Story = {
-  args: {
-    label: 'Process',
-    startIcon: <PlusIcon />,
-    endIcon: <ArrowIcon />,
-    variant: 'outline',
-  },
-};
-
-// 조합 예시들
 export const AllVariants: Story = {
   render: () => (
     <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
@@ -156,23 +69,6 @@ export const AllSizes: Story = {
       <Button label="Small" size="small" />
       <Button label="Medium" size="medium" />
       <Button label="Large" size="large" />
-    </div>
-  ),
-};
-
-export const VariantSizes: Story = {
-  render: () => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
-      <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-        <Button label="Small Primary" variant="primary" size="small" />
-        <Button label="Medium Primary" variant="primary" size="medium" />
-        <Button label="Large Primary" variant="primary" size="large" />
-      </div>
-      <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-        <Button label="Small Outline" variant="outline" size="small" />
-        <Button label="Medium Outline" variant="outline" size="medium" />
-        <Button label="Large Outline" variant="outline" size="large" />
-      </div>
     </div>
   ),
 };
@@ -196,6 +92,21 @@ export const Interactive: Story = {
         variant="primary"
         disabled
         onClick={() => alert('This should not fire')}
+      />
+    </div>
+  ),
+};
+
+export const WithIcon: Story = {
+  render: () => (
+    <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+      <Button label="Start Icon" startIcon={<PlusIcon />} variant="primary" />
+      <Button label="End Icon" endIcon={<ArrowIcon />} variant="primary" />
+      <Button
+        label="Both Icons"
+        startIcon={<PlusIcon />}
+        endIcon={<ArrowIcon />}
+        variant="outline"
       />
     </div>
   ),

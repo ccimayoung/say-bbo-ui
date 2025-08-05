@@ -3,6 +3,7 @@ import { css } from '@emotion/react';
 import { fontHandleType, handleFontStyle } from '../../styles/font';
 import { defaultTheme } from '../../styles';
 import { ButtonProps } from './buttonTypes';
+import { rowStyle } from '../../styles/layout';
 
 export const Button: React.FC<ButtonProps> = ({
   label,
@@ -37,6 +38,7 @@ const defaultStyle = css`
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  box-sizing: border-box;
   font-family: inherit;
   font-weight: 500;
   cursor: pointer;
