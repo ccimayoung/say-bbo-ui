@@ -8,7 +8,7 @@ A modern React UI component library built with TypeScript, Emotion, and Vite.
 
 - **Button** ✅ Complete (Primary, Outline, Underline, Transparent variants)
 - **Icon** ✅ Complete (SVG icon system, customizable)
-- **Select** 🔺 Limited (Single select, multi-select coming soon)
+- **Select** 🔺 Limited (Single select Finish. multi-select coming soon)
 - **Modal** 🚧 In progress
 - **Input** 📅 Coming soon
 
