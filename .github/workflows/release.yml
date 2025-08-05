@@ -129,11 +129,15 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
+      - name: Get branch name
+        id: get_branch
+        run: echo "BRANCH_NAME=${GITHUB_REF##*/}" >> $GITHUB_ENV
+
       - name: Create GitHub Release
         run: |
-          gh release create "v${{ needs.version-check.outputs.current-version }}" \
-            --title "Release v${{ needs.version-check.outputs.current-version }}" \
-            --notes "🎉 New release v${{ needs.version-check.outputs.current-version }}
+          gh release create "${BRANCH_NAME}-v${{ needs.version-check.outputs.current-version }}" \
+            --title "Release ${BRANCH_NAME} v${{ needs.version-check.outputs.current-version }}" \
+            --notes "🎉 New release ${BRANCH_NAME} v${{ needs.version-check.outputs.current-version }}
 
           ## 📦 Package
           - npm: https://www.npmjs.com/package/say-bbo-ui/v/${{ needs.version-check.outputs.current-version }}
@@ -147,6 +151,7 @@ jobs:
             --prerelease=false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH_NAME: ${{ env.BRANCH_NAME }}
 
   deploy-storybook:
     runs-on: ubuntu-latest
