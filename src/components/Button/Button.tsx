@@ -3,7 +3,6 @@ import { css } from '@emotion/react';
 import { fontHandleType, handleFontStyle } from '../../styles/font';
 import { defaultTheme } from '../../styles';
 import { ButtonProps } from './buttonTypes';
-import { rowStyle } from '../../styles/layout';
 
 export const Button: React.FC<ButtonProps> = ({
   label,
