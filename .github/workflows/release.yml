@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       should-publish: ${{ steps.version-check.outputs.should-publish }}
-      current-version: ${{ steps.version-check.outputs.current-version }}
+      current-version: ${{ steps.package-version.outputs.current-version }}
 
     steps:
       - name: Checkout code
