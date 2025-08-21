@@ -26,6 +26,7 @@ export default defineConfig({
           content,
         };
       },
+      copyDtsFiles: true,
     }),
   ],
   build: {

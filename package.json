@@ -1,14 +1,15 @@
 {
   "name": "say-bbo-ui",
-  "version": "1.0.22",
+  "version": "1.0.23",
   "description": "A modern React UI component library with CSS-in-JS",
-  "main": "dist/index.cjs.js",
+  "main": "./dist/index.cjs.js",
+  "module": "./dist/index.esm.js",
+  "types": "./dist/index.d.ts",
   "files": [
     "dist"
   ],
-  "module": "dist/index.esm.js",
-  "types": "dist/index.d.ts",
   "sideEffects": false,
+  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
