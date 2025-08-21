@@ -21,7 +21,7 @@ A modern React UI component library built with TypeScript, Emotion, and Vite.
 - 🎨 **Modern Design**: Clean and accessible components
 - ⚛️ **React 18 & 19**: Full compatibility with latest React versions
 - 📦 **Tree Shaking**: Import only what you need
-- 🎯 **TypeScript**: Full type safety
+- 🎯 **TypeScript**: Full type safety with excellent IntelliSense support
 - 🎭 **Emotion**: CSS-in-JS styling
 - 📚 **Storybook**: Interactive component documentation
 - ⚡ **Vite**: Fast development and building
@@ -43,6 +43,67 @@ Make sure you have these installed:
 
 ```bash
 npm install react react-dom @emotion/react @emotion/styled
+```
+
+## TypeScript Setup for Better IntelliSense
+
+For the best development experience with full IntelliSense and auto-completion:
+
+### 1. Ensure TypeScript is installed
+
+```bash
+npm install --save-dev typescript @types/react @types/react-dom
+```
+
+### 2. Configure your tsconfig.json
+
+Make sure your `tsconfig.json` includes these settings:
+
+```json
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "strict": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"]
+}
+```
+
+### 3. IDE Configuration
+
+**VS Code users**: Install the following extensions for the best experience:
+
+- TypeScript and JavaScript Language Features
+- React Developer Tools
+
+**WebStorm users**: TypeScript support is built-in and should work automatically.
+
+### 4. Import Methods
+
+For the best IntelliSense experience, use these import patterns:
+
+```tsx
+// ✅ Recommended: Full IntelliSense support
+import { Button, Modal, Select, Icon } from 'say-bbo-ui';
+
+// ✅ Also works: Individual component imports
+import { Button } from 'say-bbo-ui';
+
+// ❌ Avoid: Direct path imports (may not have full type support)
+import Button from 'say-bbo-ui/dist/components/Button';
 ```
 
 ## Usage

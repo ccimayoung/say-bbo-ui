@@ -54,24 +54,34 @@
   },
   "exports": {
     ".": {
+      "types": "./dist/index.d.ts",
       "import": "./dist/index.esm.js",
       "require": "./dist/index.cjs.js"
     },
     "./Button": {
+      "types": "./dist/components/Button/index.d.ts",
       "import": "./dist/components/Button/index.esm.js",
       "require": "./dist/components/Button/index.cjs.js"
     },
     "./Modal": {
+      "types": "./dist/components/Modal/index.d.ts",
       "import": "./dist/components/Modal/index.esm.js",
       "require": "./dist/components/Modal/index.cjs.js"
     },
     "./Icon": {
+      "types": "./dist/components/Icon/index.d.ts",
       "import": "./dist/components/Icon/index.esm.js",
       "require": "./dist/components/Icon/index.cjs.js"
     },
     "./Select": {
+      "types": "./dist/components/Select/index.d.ts",
       "import": "./dist/components/Select/index.esm.js",
       "require": "./dist/components/Select/index.cjs.js"
+    },
+    "./styles": {
+      "types": "./dist/styles.d.ts",
+      "import": "./dist/styles.esm.js",
+      "require": "./dist/styles.cjs.js"
     }
   },
   "peerDependencies": {
@@ -96,6 +106,9 @@
       ],
       "Select": [
         "./dist/components/Select/index.d.ts"
+      ],
+      "styles": [
+        "./dist/styles.d.ts"
       ]
     }
   }

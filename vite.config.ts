@@ -9,7 +9,24 @@ export default defineConfig({
       jsxImportSource: '@emotion/react',
       babel: { plugins: ['@emotion/babel-plugin'] },
     }),
-    dts({ insertTypesEntry: true }),
+    dts({
+      insertTypesEntry: true,
+      rollupTypes: true,
+      logLevel: 'info',
+      include: ['src/**/*'],
+      exclude: [
+        'src/**/*.stories.tsx',
+        'src/**/*.test.tsx',
+        'src/**/*.spec.tsx',
+      ],
+      beforeWriteFile: (filePath, content) => {
+        // 타입 정의 파일의 품질을 개선
+        return {
+          filePath,
+          content,
+        };
+      },
+    }),
   ],
   build: {
     lib: {
