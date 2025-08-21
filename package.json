@@ -9,13 +9,12 @@
     "dist"
   ],
   "sideEffects": false,
-  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
     "build:components": "tsc && vite build --config vite.config.components.ts",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build",
+    "build-storybook": "storybook build --config-dir .storybook",
     "deploy-storybook": "gh-pages -d storybook-static",
     "type-check": "tsc --noEmit",
     "lint": "eslint src --ext .ts,.tsx",

@@ -14,5 +14,9 @@ const config: StorybookConfig = {
   docs: {
     autodocs: 'tag',
   },
+  viteFinal: async (config) => {
+    // Storybook 전용 vite 설정 사용
+    return config;
+  },
 };
 export default config;
